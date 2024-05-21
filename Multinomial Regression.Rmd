@@ -27,10 +27,9 @@ library(psych) # describe()
 library(ggpubr) # ggdensity() and ggqqplot()
 library(corrplot) # corrplot()
 here::i_am("Multinomial Regression.Rmd")
-library(rhdf5)
 ```
 
-# Overview: Camera Marketing Study
+## Overview: Camera Marketing Study
 Sample of 735 of individuals surveyed by a market research group for the purposes of investigating the role of age and “gender” (outdated binary—this is old data) in digital camera brand choices.
 
 Variables for the study include:
@@ -39,9 +38,9 @@ Variables for the study include:
 2.  Female - 1 = Female - 0 = Male
 3.  Age (in years)
 
-# Import Data
+## Import Data
 
-8. In R:
+ In R:
 -   Start a new code chunk to load the data
     -   PC: Ctrl + Alt + I
     -   Mac: Option + Command + I
@@ -52,7 +51,7 @@ Variables for the study include:
 data_csv <- read_csv(here("camera.dat"), col_names = c("brand", "female", "age"))
 ```
 
-# Evaluate Data 
+## Evaluate Data 
 Create a new code chunk
 Use the summary function to get summary of the data 
 Lets make a contingency (3x2) table to get a snapshot of camera choice using the table function
@@ -79,7 +78,7 @@ summary(data_csv)
 table1 <-table(data_csv$brand, data_csv$female)
 table1
 ```
-# Prepare data for mplus 
+## Prepare data for mplus 
 Introduced last week: 
 
 Convert from file to Mplus *.dat* file**
@@ -91,7 +90,7 @@ create a new code chunk
 ```{r}
 prepareMplusData(data_csv, here("exp_data.dat"))
 ```
-### Step 6: Using `MplusAutomation` for multinomial regression 
+## Using `MplusAutomation` for multinomial regression 
 
 Reminder from last week:
 **What does the** `mplusObject()` **function do?**
@@ -104,10 +103,9 @@ Reminder from last week:
 2.  You can specify where you want the *.out* file saved
 3.  `check=TRUE` checks for missing semicolons, `run=TRUE` runs the model, `hashfilename=FALSE` does not add a hash of the raw data to the data file name.
 
-
-
 create a new code chunk 
-Mulinomial regression of brand on female simple 
+
+### Mulinomial regression of brand on female simple 
 
 ```{r, echo=TRUE, eval=FALSE}
 m_basic_simp  <- mplusObject(
@@ -132,7 +130,7 @@ m_basic_fit_simp <- mplusModeler(m_basic_simp,
                modelout=here("basic_simp.inp"),
                check=TRUE, run = TRUE, hashfilename = FALSE)
 ```
-Multiple regression with MLR and selected output 
+### Multiple regression with MLR and selected output 
 ```{r, echo=TRUE, eval=FALSE}
 m_basic  <- mplusObject(
   
@@ -162,7 +160,7 @@ m_basic_fit <- mplusModeler(m_basic,
 
 CHECK YOUR OUTPUT!!! Select .out to view output!
 
-# Use final estimates as starting values in the command line 
+### Use final estimates as starting values in the command line 
 
 create new code chunk
 -Mulinomial regression of brand on female with starting values from last output. 
@@ -200,7 +198,7 @@ m_basic_fit_2 <- mplusModeler(m_basic_2,
                check=TRUE, run = TRUE, hashfilename = FALSE)
 ```
 
-# Mplus input with alternate COR/RR
+### Mplus input with alternate COR/RR
 ```{r, echo=TRUE, eval=FALSE}
 m_basic_3  <- mplusObject(
   
@@ -233,7 +231,7 @@ m_basic_fit_3 <- mplusModeler(m_basic_3,
                check=TRUE, run = TRUE, hashfilename = FALSE)
 ```
 
-# Mplus input multinomial regression of brand on female & age
+### Mplus input multinomial regression of brand on female & age
 ```{r, echo=TRUE, eval=FALSE}
 m_basic_4  <- mplusObject(
   
