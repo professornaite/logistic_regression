@@ -1,0 +1,204 @@
+Mplus VERSION 8.7 (Mac)
+MUTHEN & MUTHEN
+05/20/2024   3:39 PM
+
+INPUT INSTRUCTIONS
+
+  TITLE:
+  Multinomial regression brand on female;
+  DATA:
+  FILE = "/Users/nkpiz/IMMERSE_Day-5/basic_2.dat";
+
+  VARIABLE:
+  NAMES = brand female age;
+   MISSING=.;
+   usevar = brand female;
+   Nominal are brand;
+  ANALYSIS:
+  estimator = MLR;
+  MODEL:
+  brand#1 on female* -0.38299 (femCvN);
+      brand#2 on female* -0.13628 (femKvN);
+      [brand#1*0.16508] (intCvN);
+      [brand#2*0.23841] (intKvN);
+  MODEL TEST:
+  0 = femCvN;
+      0 = femKvN;
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+
+Multinomial regression brand on female;
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                         735
+
+Number of dependent variables                                    1
+Number of independent variables                                  1
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Unordered categorical (nominal)
+   BRAND
+
+Observed independent variables
+   FEMALE
+
+
+Estimator                                                      MLR
+Information matrix                                        OBSERVED
+Optimization Specifications for the Quasi-Newton Algorithm for
+Continuous Outcomes
+  Maximum number of iterations                                 100
+  Convergence criterion                                  0.100D-05
+Optimization Specifications for the EM Algorithm
+  Maximum number of iterations                                 500
+  Convergence criteria
+    Loglikelihood change                                 0.100D-02
+    Relative loglikelihood change                        0.100D-05
+    Derivative                                           0.100D-02
+Optimization Specifications for the M step of the EM Algorithm for
+Categorical Latent variables
+  Number of M step iterations                                    1
+  M step convergence criterion                           0.100D-02
+  Basis for M step termination                           ITERATION
+Optimization Specifications for the M step of the EM Algorithm for
+Censored, Binary or Ordered Categorical (Ordinal), Unordered
+Categorical (Nominal) and Count Outcomes
+  Number of M step iterations                                    1
+  M step convergence criterion                           0.100D-02
+  Basis for M step termination                           ITERATION
+  Maximum value for logit thresholds                            15
+  Minimum value for logit thresholds                           -15
+  Minimum expected cell size for chi-square              0.100D-01
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+Optimization algorithm                                         EMA
+Integration Specifications
+  Type                                                    STANDARD
+  Number of integration points                                  15
+  Dimensions of numerical integration                            0
+  Adaptive quadrature                                           ON
+Cholesky                                                       OFF
+
+Input data file(s)
+  /Users/nkpiz/IMMERSE_Day-5/basic_2.dat
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+UNIVARIATE PROPORTIONS AND COUNTS FOR CATEGORICAL VARIABLES
+
+    BRAND
+      Category 1    0.282          207.000
+      Category 2    0.418          307.000
+      Category 3    0.301          221.000
+
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     FEMALE                0.634      -0.556       0.000   36.60%       0.000      1.000      1.000
+             735.000       0.232      -1.690       1.000   63.40%       1.000      1.000
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                        4
+
+Loglikelihood
+
+          H0 Value                        -791.861
+          H0 Scaling Correction Factor      1.0000
+            for MLR
+
+Information Criteria
+
+          Akaike (AIC)                    1591.723
+          Bayesian (BIC)                  1610.122
+          Sample-Size Adjusted BIC        1597.421
+            (n* = (n + 2) / 24)
+
+Wald Test of Parameter Constraints
+
+          Value                              8.097
+          Degrees of Freedom                     2
+          P-Value                           0.0174
+
+
+
+MODEL RESULTS
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ BRAND#1    ON
+    FEMALE            -0.383      0.198     -1.930      0.054
+
+ BRAND#2    ON
+    FEMALE             0.136      0.186      0.731      0.465
+
+ Intercepts
+    BRAND#1            0.165      0.154      1.073      0.283
+    BRAND#2            0.238      0.151      1.575      0.115
+
+
+QUALITY OF NUMERICAL RESULTS
+
+     Condition Number for the Information Matrix              0.328E-01
+       (ratio of smallest to largest eigenvalue)
+
+
+LOGISTIC REGRESSION ODDS RATIO RESULTS
+
+                                                95% C.I.
+                    Estimate       S.E.  Lower 2.5% Upper 2.5%
+
+ BRAND#1    ON
+    FEMALE             0.682      0.135      0.462      1.006
+
+ BRAND#2    ON
+    FEMALE             1.146      0.214      0.795      1.651
+
+
+     Beginning Time:  15:39:56
+        Ending Time:  15:39:57
+       Elapsed Time:  00:00:01
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2021 Muthen & Muthen

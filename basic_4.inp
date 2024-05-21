@@ -1,0 +1,16 @@
+TITLE:
+Multinomial regression brand on female and age;
+DATA:
+FILE = "/Users/nkpiz/IMMERSE_Day-5/basic_4.dat";
+ 
+VARIABLE:
+NAMES = brand female age; 
+ MISSING=.;
+ usevar = brand female age;
+ Nominal are brand;
+ANALYSIS:
+estimator = MLR;
+MODEL:
+brand on female age
+OUTPUT:
+sampstat crosstabs residual cinterval tech1 svalues;

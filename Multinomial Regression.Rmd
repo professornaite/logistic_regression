@@ -1,0 +1,265 @@
+---
+title: "IMMERSE_Day 5_Multinomial Regression"
+author: "Netasha"
+date: "2024-05-20"
+output: html_document
+---
+
+1. From github select github repository
+2. Click the "<> Code" 
+3. Click Download Zip
+4. Move Zip file to desktop
+5. Make sure file is unzipped!
+6. Open IMMERSE_Day-5.Rproj project
+7. Select the "Multinomial regression.Rmd"
+
+## Read in packages
+There are a few packages we want our markdown to read in:
+Click on the "run current chunk" button (looks like a play button on line 19 )
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(MplusAutomation) #use this code to run mplus code in R
+library(tidyverse) #collection of R packages designed for data science
+library(here) #helps with filepaths
+library(haven) # read_sav()
+library(psych) # describe()
+library(ggpubr) # ggdensity() and ggqqplot()
+library(corrplot) # corrplot()
+here::i_am("Multinomial Regression.Rmd")
+library(rhdf5)
+```
+
+# Overview: Camera Marketing Study
+Sample of 735 of individuals surveyed by a market research group for the purposes of investigating the role of age and “gender” (outdated binary—this is old data) in digital camera brand choices.
+
+Variables for the study include:
+
+1.  Brand - 1 = Cannon - 2 = Kodak - 3 = Nikon
+2.  Female - 1 = Female - 0 = Male
+3.  Age (in years)
+
+# Import Data
+
+8. In R:
+-   Start a new code chunk to load the data
+    -   PC: Ctrl + Alt + I
+    -   Mac: Option + Command + I
+
+```{r}
+#Using the read_csv code we will import our .dat data file into R. We are going to add column names to descriptive purposes
+#there are many ways to import your data such as the import dataset menu in the environment (point and click approach)
+data_csv <- read_csv(here("camera.dat"), col_names = c("brand", "female", "age"))
+```
+
+# Evaluate Data 
+Create a new code chunk
+Use the summary function to get summary of the data 
+Lets make a contingency (3x2) table to get a snapshot of camera choice using the table function
+-   Start a new code chunk to load the data
+    -   PC: Ctrl + Alt + I
+    -   Mac: Option + Command + I
+- use the summary function 
+- use the table function 
+  - create a name for the table
+  - Assign the table using assignment operator 
+    -   PC: Alt + (-)
+    -   Mac: Option + (-) 
+  - type table
+  - type the name of the data set 
+  - type $
+  -use the drop down menu to locate the variable or begin to type the variable name "brand" (x-axis) and select
+  - add a comma to add the second variable 
+  - type the name of the data set followed by the dollar sign and "female" (y-axis)
+  - note: the table function will give a basic table. Labels will not be presented on the x and y axis. We would need to change the variables to factors.
+  
+
+```{r}
+summary(data_csv)
+table1 <-table(data_csv$brand, data_csv$female)
+table1
+```
+# Prepare data for mplus 
+Introduced last week: 
+
+Convert from file to Mplus *.dat* file**
+
+Say you want an Mplus .dat file and don't want to go through the hassle of deleting rows and manual conversion to *.dat*.
+You can use the `prepareMplusData()` function to convert from *.csv* to *.dat*. A new file will be generated in your folder 
+
+create a new code chunk
+```{r}
+prepareMplusData(data_csv, here("exp_data.dat"))
+```
+### Step 6: Using `MplusAutomation` for multinomial regression 
+
+Reminder from last week:
+**What does the** `mplusObject()` **function do?**
+1. It generates an Mplus input file (does not need full variable name list, its automated for you!) 
+2. It generates a datafile specific to each model 
+3. It runs or estimates the model (hopefully) producing the correct output. Always check!
+
+**What does the** `mplusModeler()` **function do?**
+1.  Creates, runs, and reads Mplus models created using `mplusObject()`
+2.  You can specify where you want the *.out* file saved
+3.  `check=TRUE` checks for missing semicolons, `run=TRUE` runs the model, `hashfilename=FALSE` does not add a hash of the raw data to the data file name.
+
+
+
+create a new code chunk 
+Mulinomial regression of brand on female simple 
+
+```{r, echo=TRUE, eval=FALSE}
+m_basic_simp  <- mplusObject(
+  
+  TITLE = "Multinomial regression brand on female;",
+  
+  VARIABLE = 
+ "usevar = brand female;
+ Nominal are brand;",
+  
+  ANALYSIS = 
+ "estimator = ML;",
+ 
+ MODEL = 
+   "brand on female;",
+ 
+  usevariables = colnames(data_csv), 
+  rdata = data_csv)
+
+m_basic_fit_simp <- mplusModeler(m_basic_simp, 
+               dataout=here("basic_simp.dat"),
+               modelout=here("basic_simp.inp"),
+               check=TRUE, run = TRUE, hashfilename = FALSE)
+```
+Multiple regression with MLR and selected output 
+```{r, echo=TRUE, eval=FALSE}
+m_basic  <- mplusObject(
+  
+  TITLE = "Multinomial regression brand on female;",
+  
+  VARIABLE = 
+ "usevar = brand female;
+ Nominal are brand;",
+  
+  ANALYSIS = 
+ "estimator = MLR;",
+ 
+ MODEL = 
+   "brand on female;",
+ 
+ OUTPUT = 
+   "sampstat crosstabs residual cinterval tech1 svalues;",
+ 
+  usevariables = colnames(data_csv), 
+  rdata = data_csv)
+
+m_basic_fit <- mplusModeler(m_basic, 
+               dataout=here("basic.dat"),
+               modelout=here("basic.inp"),
+               check=TRUE, run = TRUE, hashfilename = FALSE)
+```
+
+CHECK YOUR OUTPUT!!! Select .out to view output!
+
+# Use final estimates as starting values in the command line 
+
+create new code chunk
+-Mulinomial regression of brand on female with starting values from last output. 
+- must add a * before start value 
+-Add parameter labels to each level of brand in parenthesis 
+
+```{r, echo=TRUE, eval=FALSE}
+m_basic_2  <- mplusObject(
+  
+  TITLE = "Multinomial regression brand on female;",
+  
+  VARIABLE = 
+ "usevar = brand female;
+ Nominal are brand;",
+  
+  ANALYSIS = 
+ "estimator = MLR;",
+ 
+ MODEL = 
+   "brand#1 on female* -0.38299 (femCvN);
+    brand#2 on female* -0.13628 (femKvN);
+    [brand#1*0.16508] (intCvN);
+    [brand#2*0.23841] (intKvN);",
+ 
+ MODELTEST = 
+     "0 = femCvN;
+    0 = femKvN;",
+ 
+  usevariables = colnames(data_csv), 
+  rdata = data_csv)
+
+m_basic_fit_2 <- mplusModeler(m_basic_2, 
+               dataout=here("basic_2.dat"),
+               modelout=here("basic_2.inp"),
+               check=TRUE, run = TRUE, hashfilename = FALSE)
+```
+
+# Mplus input with alternate COR/RR
+```{r, echo=TRUE, eval=FALSE}
+m_basic_3  <- mplusObject(
+  
+  TITLE = "Multinomial regression brand on female;",
+  
+  VARIABLE = 
+ "usevar = brand female;
+ Nominal are brand;",
+  
+  ANALYSIS = 
+ "estimator = MLR;",
+ 
+ MODEL = 
+   "brand#1 on female* -0.38299 (femCvN);
+    brand#2 on female* -0.13628 (femKvN);
+    [brand#1*0.16508] (intCvN);
+    [brand#2*0.23841] (intKvN);",
+ 
+ MODELCONSTRAINT = 
+   "New(femCvK efemCvK);
+       femCvK = femCvN-femKvN;
+       efemCvK = exp(femCvk);",
+ 
+  usevariables = colnames(data_csv), 
+  rdata = data_csv)
+
+m_basic_fit_3 <- mplusModeler(m_basic_3, 
+               dataout=here("basic_3.dat"),
+               modelout=here("basic_3.inp"),
+               check=TRUE, run = TRUE, hashfilename = FALSE)
+```
+
+# Mplus input multinomial regression of brand on female & age
+```{r, echo=TRUE, eval=FALSE}
+m_basic_4  <- mplusObject(
+  
+  TITLE = "Multinomial regression brand on female and age;",
+  
+  VARIABLE = 
+ "usevar = brand female age;
+ Nominal are brand;",
+  
+  ANALYSIS = 
+ "estimator = MLR;",
+ 
+ MODEL = 
+   "brand on female age",
+ 
+OUTPUT = 
+  "sampstat crosstabs residual cinterval tech1 svalues;",
+ 
+  usevariables = colnames(data_csv), 
+  rdata = data_csv)
+
+m_basic_fit_4 <- mplusModeler(m_basic_4, 
+               dataout=here("basic_4.dat"),
+               modelout=here("basic_4.inp"),
+               check=TRUE, run = TRUE, hashfilename = FALSE)
+```
+
+
+

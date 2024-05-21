@@ -1,0 +1,382 @@
+Mplus VERSION 8.7 (Mac)
+MUTHEN & MUTHEN
+05/20/2024   4:09 PM
+
+INPUT INSTRUCTIONS
+
+  TITLE:
+  Multinomial regression brand on female and age;
+  DATA:
+  FILE = "/Users/nkpiz/IMMERSE_Day-5/basic_4.dat";
+
+  VARIABLE:
+  NAMES = brand female age;
+   MISSING=.;
+   usevar = brand female age;
+   Nominal are brand;
+  ANALYSIS:
+  estimator = MLR;
+  MODEL:
+  brand on female age
+  OUTPUT:
+  sampstat crosstabs residual cinterval tech1 svalues;
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+
+Multinomial regression brand on female and age;
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                         735
+
+Number of dependent variables                                    1
+Number of independent variables                                  2
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Unordered categorical (nominal)
+   BRAND
+
+Observed independent variables
+   FEMALE      AGE
+
+
+Estimator                                                      MLR
+Information matrix                                        OBSERVED
+Optimization Specifications for the Quasi-Newton Algorithm for
+Continuous Outcomes
+  Maximum number of iterations                                 100
+  Convergence criterion                                  0.100D-05
+Optimization Specifications for the EM Algorithm
+  Maximum number of iterations                                 500
+  Convergence criteria
+    Loglikelihood change                                 0.100D-02
+    Relative loglikelihood change                        0.100D-05
+    Derivative                                           0.100D-02
+Optimization Specifications for the M step of the EM Algorithm for
+Categorical Latent variables
+  Number of M step iterations                                    1
+  M step convergence criterion                           0.100D-02
+  Basis for M step termination                           ITERATION
+Optimization Specifications for the M step of the EM Algorithm for
+Censored, Binary or Ordered Categorical (Ordinal), Unordered
+Categorical (Nominal) and Count Outcomes
+  Number of M step iterations                                    1
+  M step convergence criterion                           0.100D-02
+  Basis for M step termination                           ITERATION
+  Maximum value for logit thresholds                            15
+  Minimum value for logit thresholds                           -15
+  Minimum expected cell size for chi-square              0.100D-01
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+Optimization algorithm                                         EMA
+Integration Specifications
+  Type                                                    STANDARD
+  Number of integration points                                  15
+  Dimensions of numerical integration                            0
+  Adaptive quadrature                                           ON
+Cholesky                                                       OFF
+
+Input data file(s)
+  /Users/nkpiz/IMMERSE_Day-5/basic_4.dat
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+UNIVARIATE PROPORTIONS AND COUNTS FOR CATEGORICAL VARIABLES
+
+    BRAND
+      Category 1    0.282          207.000
+      Category 2    0.418          307.000
+      Category 3    0.301          221.000
+
+
+
+CROSSTABS FOR CATEGORICAL VARIABLES
+
+
+
+SAMPLE STATISTICS
+
+
+     SAMPLE STATISTICS
+
+
+           Means
+              FEMALE        AGE
+              ________      ________
+                0.634        32.901
+
+
+           Covariances
+              FEMALE        AGE
+              ________      ________
+ FEMALE         0.232
+ AGE            0.009         5.436
+
+
+           Correlations
+              FEMALE        AGE
+              ________      ________
+ FEMALE         1.000
+ AGE            0.008         1.000
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     FEMALE                0.634      -0.556       0.000   36.60%       0.000      1.000      1.000
+             735.000       0.232      -1.690       1.000   63.40%       1.000      1.000
+     AGE                  32.901       0.163      24.000    0.14%      32.000     32.000     32.000
+             735.000       5.436       0.389      38.000    4.35%      32.000     35.000
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                        6
+
+Loglikelihood
+
+          H0 Value                        -702.971
+          H0 Scaling Correction Factor      1.0314
+            for MLR
+
+Information Criteria
+
+          Akaike (AIC)                    1417.941
+          Bayesian (BIC)                  1445.541
+          Sample-Size Adjusted BIC        1426.489
+            (n* = (n + 2) / 24)
+
+
+
+MODEL RESULTS
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ BRAND#1    ON
+    FEMALE            -0.466      0.227     -2.057      0.040
+    AGE               -0.686      0.072     -9.497      0.000
+
+ BRAND#2    ON
+    FEMALE             0.058      0.196      0.296      0.768
+    AGE               -0.318      0.046     -6.882      0.000
+
+ Intercepts
+    BRAND#1           22.721      2.378      9.554      0.000
+    BRAND#2           10.947      1.571      6.969      0.000
+
+
+QUALITY OF NUMERICAL RESULTS
+
+     Condition Number for the Information Matrix              0.773E-06
+       (ratio of smallest to largest eigenvalue)
+
+
+LOGISTIC REGRESSION ODDS RATIO RESULTS
+
+                                                95% C.I.
+                    Estimate       S.E.  Lower 2.5% Upper 2.5%
+
+ BRAND#1    ON
+    FEMALE             0.628      0.142      0.403      0.978
+    AGE                0.504      0.036      0.437      0.580
+
+ BRAND#2    ON
+    FEMALE             1.060      0.207      0.722      1.555
+    AGE                0.728      0.034      0.665      0.797
+
+
+CONFIDENCE INTERVALS OF MODEL RESULTS
+
+                  Lower .5%  Lower 2.5%    Lower 5%    Estimate    Upper 5%  Upper 2.5%   Upper .5%
+
+ BRAND#1  ON
+    FEMALE          -1.050      -0.910      -0.839      -0.466      -0.093      -0.022       0.118
+    AGE             -0.872      -0.827      -0.805      -0.686      -0.567      -0.544      -0.500
+
+ BRAND#2  ON
+    FEMALE          -0.446      -0.326      -0.264       0.058       0.380       0.442       0.562
+    AGE             -0.437      -0.408      -0.394      -0.318      -0.242      -0.227      -0.199
+
+ Intercepts
+    BRAND#1         16.596      18.060      18.809      22.721      26.633      27.382      28.847
+    BRAND#2          6.901       7.868       8.363      10.947      13.531      14.025      14.993
+
+
+CONFIDENCE INTERVALS FOR THE LOGISTIC REGRESSION ODDS RATIO RESULTS
+
+ BRAND#1  ON
+    FEMALE           0.350       0.403       0.432       0.628       0.911       0.978       1.125
+    AGE              0.418       0.437       0.447       0.504       0.567       0.580       0.607
+
+ BRAND#2  ON
+    FEMALE           0.640       0.722       0.768       1.060       1.462       1.555       1.755
+    AGE              0.646       0.665       0.675       0.728       0.785       0.797       0.820
+
+
+MODEL COMMAND WITH FINAL ESTIMATES USED AS STARTING VALUES
+
+     brand#1 ON female*-0.46594;
+     brand#1 ON age*-0.68591;
+     brand#2 ON female*0.05787;
+     brand#2 ON age*-0.31770;
+
+     [ brand#1*22.72137 ];
+     [ brand#2*10.94674 ];
+
+
+
+RESIDUAL OUTPUT
+
+
+     RESIDUAL OUTPUT IS NOT AVAILABLE FOR THIS MODEL.  ADDITIONAL OUTPUT FOR
+     CATEGORICAL, COUNT, AND NOMINAL VARIABLES MAY BE AVAILABLE USING TECH10.
+
+
+TECHNICAL 1 OUTPUT
+
+
+     PARAMETER SPECIFICATION
+
+
+           NU
+              BRAND#1       BRAND#2       FEMALE        AGE
+              ________      ________      ________      ________
+                    0             0             0             0
+
+
+           LAMBDA
+              BRAND#1       BRAND#2       FEMALE        AGE
+              ________      ________      ________      ________
+ BRAND#1            0             0             0             0
+ BRAND#2            0             0             0             0
+ FEMALE             0             0             0             0
+ AGE                0             0             0             0
+
+
+           THETA
+              BRAND#1       BRAND#2       FEMALE        AGE
+              ________      ________      ________      ________
+ BRAND#1            0
+ BRAND#2            0             0
+ FEMALE             0             0             0
+ AGE                0             0             0             0
+
+
+           ALPHA
+              BRAND#1       BRAND#2       FEMALE        AGE
+              ________      ________      ________      ________
+                    1             2             0             0
+
+
+           BETA
+              BRAND#1       BRAND#2       FEMALE        AGE
+              ________      ________      ________      ________
+ BRAND#1            0             0             3             4
+ BRAND#2            0             0             5             6
+ FEMALE             0             0             0             0
+ AGE                0             0             0             0
+
+
+           PSI
+              BRAND#1       BRAND#2       FEMALE        AGE
+              ________      ________      ________      ________
+ BRAND#1            0
+ BRAND#2            0             0
+ FEMALE             0             0             0
+ AGE                0             0             0             0
+
+
+     STARTING VALUES
+
+
+           NU
+              BRAND#1       BRAND#2       FEMALE        AGE
+              ________      ________      ________      ________
+                0.000         0.000         0.000         0.000
+
+
+           LAMBDA
+              BRAND#1       BRAND#2       FEMALE        AGE
+              ________      ________      ________      ________
+ BRAND#1        1.000         0.000         0.000         0.000
+ BRAND#2        0.000         1.000         0.000         0.000
+ FEMALE         0.000         0.000         1.000         0.000
+ AGE            0.000         0.000         0.000         1.000
+
+
+           THETA
+              BRAND#1       BRAND#2       FEMALE        AGE
+              ________      ________      ________      ________
+ BRAND#1        0.000
+ BRAND#2        0.000         0.000
+ FEMALE         0.000         0.000         0.000
+ AGE            0.000         0.000         0.000         0.000
+
+
+           ALPHA
+              BRAND#1       BRAND#2       FEMALE        AGE
+              ________      ________      ________      ________
+               -0.065         0.329         0.000         0.000
+
+
+           BETA
+              BRAND#1       BRAND#2       FEMALE        AGE
+              ________      ________      ________      ________
+ BRAND#1        0.000         0.000         0.000         0.000
+ BRAND#2        0.000         0.000         0.000         0.000
+ FEMALE         0.000         0.000         0.000         0.000
+ AGE            0.000         0.000         0.000         0.000
+
+
+           PSI
+              BRAND#1       BRAND#2       FEMALE        AGE
+              ________      ________      ________      ________
+ BRAND#1        0.000
+ BRAND#2        0.000         0.000
+ FEMALE         0.000         0.000         0.116
+ AGE            0.000         0.000         0.000         2.718
+
+
+     Beginning Time:  16:09:59
+        Ending Time:  16:09:59
+       Elapsed Time:  00:00:00
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2021 Muthen & Muthen

@@ -1,0 +1,21 @@
+TITLE:
+Multinomial regression brand on female;
+DATA:
+FILE = "/Users/nkpiz/IMMERSE_Day-5/basic_3.dat";
+ 
+VARIABLE:
+NAMES = brand female age; 
+ MISSING=.;
+ usevar = brand female;
+ Nominal are brand;
+ANALYSIS:
+estimator = MLR;
+MODEL:
+brand#1 on female* -0.38299 (femCvN);
+    brand#2 on female* -0.13628 (femKvN);
+    [brand#1*0.16508] (intCvN);
+    [brand#2*0.23841] (intKvN);
+MODEL CONSTRAINT:
+New(femCvK efemCvK);
+       femCvK = femCvN-femKvN;
+       efemCvK = exp(femCvk);
